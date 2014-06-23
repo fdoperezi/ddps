@@ -7,9 +7,13 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 widgets     : [shiny, interactive]  # {mathjax, quiz, bootstrap}
+ext_widgets : {rCharts: [libraries/nvd3, libraries/highcharts]}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
 ---
+
+
+
 
 ## Shiny Application Components
 
@@ -74,23 +78,24 @@ https://fdoperezi.shinyapps.io/betaDensityApp/
 
 Finally, we will use Shiny to add interactive controls to the chart we created previously. Suppose that we want to control `Alpha` and the `Beta` of plot. Let us first add the UI. `slidifyUI` behaves almost like `shinyUI` except that it outputs a character vector.
 
-
-```r
-library(shiny)
-
-slidifyUI(
-  headerPanel('Exploring The Beta Density'),
-  sidebarPanel(
-    sliderInput('alpha', 'Alpha',value = 1, min = 0.01, max = 10, step = 0.5,),
-    sliderInput('beta', 'Beta',value = 1, min = 0.01, max = 10, step = 0.5,)
-  ),
-  mainPanel(
-    #plotOutput('betaDensity')
-  )
-)
-```
-
-```
-## Error: could not find function "slidifyUI"
-```
+<div class="row-fluid">
+  <div class="span12" style="padding: 10px 0px;">
+    <h1>Exploring The Beta Density</h1>
+  </div>
+  <div class="span4">
+    <form class="well">
+      <div>
+        <label class="control-label" for="alpha">Alpha</label>
+        <input id="alpha" type="slider" name="alpha" value="1" class="jslider" data-from="0.01" data-to="10" data-step="0.5" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-scale="|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|" data-smooth="FALSE"/>
+      </div>
+      <div>
+        <label class="control-label" for="beta">Beta</label>
+        <input id="beta" type="slider" name="beta" value="1" class="jslider" data-from="0.01" data-to="10" data-step="0.5" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-scale="|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|" data-smooth="FALSE"/>
+      </div>
+    </form>
+  </div>
+  <div class="span8">
+    <div id="betaDensity" class="shiny-html-output nvd3 rChart"></div>
+  </div>
+</div>
 ---

@@ -7,9 +7,15 @@ framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 widgets     : [shiny, interactive]  # {mathjax, quiz, bootstrap}
+ext_widgets : {rCharts: [libraries/nvd3, libraries/highcharts]}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
 ---
+
+```{r setup, echo=FALSE, cache=FALSE}
+library(shiny)
+```
+
 
 ## Shiny Application Components
 
@@ -73,8 +79,6 @@ https://fdoperezi.shinyapps.io/betaDensityApp/
 Finally, we will use Shiny to add interactive controls to the chart we created previously. Suppose that we want to control `Alpha` and the `Beta` of plot. Let us first add the UI. `slidifyUI` behaves almost like `shinyUI` except that it outputs a character vector.
 
 ```{r opts.label = 'shiny'}
-library(shiny)
-
 slidifyUI(
   headerPanel('Exploring The Beta Density'),
   sidebarPanel(
@@ -82,7 +86,7 @@ slidifyUI(
     sliderInput('beta', 'Beta',value = 1, min = 0.01, max = 10, step = 0.5,)
   ),
   mainPanel(
-    #plotOutput('betaDensity')
+    tags$div(id = 'betaDensity', class='shiny-html-output nvd3 rChart')
   )
 )
 ```

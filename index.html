@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
   <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
   <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="libraries/widgets/interactive/css/aceeditor.css"></link>
+<link rel=stylesheet href="libraries/widgets/nvd3/css/nv.d3.css"></link>
+<link rel=stylesheet href="libraries/widgets/nvd3/css/rNVD3.css"></link>
 <link rel=stylesheet href="./assets/css/ribbons.css"></link>
 
   
@@ -24,7 +26,15 @@
     src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
   </script>
   
-  
+  <script src="libraries/widgets/nvd3/js/jquery-1.8.2.min.js"></script>
+<script src="libraries/widgets/nvd3/js/d3.v3.min.js"></script>
+<script src="libraries/widgets/nvd3/js/nv.d3.min-new.js"></script>
+<script src="libraries/widgets/nvd3/js/fisheye.js"></script>
+<script src="libraries/widgets/highcharts/js/jquery-1.9.1.min.js"></script>
+<script src="libraries/widgets/highcharts/js/highcharts.js"></script>
+<script src="libraries/widgets/highcharts/js/highcharts-more.js"></script>
+<script src="libraries/widgets/highcharts/js/exporting.js"></script>
+
 
 </head>
 <body style="opacity: 0">
@@ -128,22 +138,26 @@ shinyServer(
   <article data-timings="">
     <p>Finally, we will use Shiny to add interactive controls to the chart we created previously. Suppose that we want to control <code>Alpha</code> and the <code>Beta</code> of plot. Let us first add the UI. <code>slidifyUI</code> behaves almost like <code>shinyUI</code> except that it outputs a character vector.</p>
 
-<pre><code class="r">library(shiny)
-
-slidifyUI(
-  headerPanel(&#39;Exploring The Beta Density&#39;),
-  sidebarPanel(
-    sliderInput(&#39;alpha&#39;, &#39;Alpha&#39;,value = 1, min = 0.01, max = 10, step = 0.5,),
-    sliderInput(&#39;beta&#39;, &#39;Beta&#39;,value = 1, min = 0.01, max = 10, step = 0.5,)
-  ),
-  mainPanel(
-    #plotOutput(&#39;betaDensity&#39;)
-  )
-)
-</code></pre>
-
-<pre><code>## Error: could not find function &quot;slidifyUI&quot;
-</code></pre>
+<div class="row-fluid">
+  <div class="span12" style="padding: 10px 0px;">
+    <h1>Exploring The Beta Density</h1>
+  </div>
+  <div class="span4">
+    <form class="well">
+      <div>
+        <label class="control-label" for="alpha">Alpha</label>
+        <input id="alpha" type="slider" name="alpha" value="1" class="jslider" data-from="0.01" data-to="10" data-step="0.5" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-scale="|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|" data-smooth="FALSE"/>
+      </div>
+      <div>
+        <label class="control-label" for="beta">Beta</label>
+        <input id="beta" type="slider" name="beta" value="1" class="jslider" data-from="0.01" data-to="10" data-step="0.5" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-scale="|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|;|" data-smooth="FALSE"/>
+      </div>
+    </form>
+  </div>
+  <div class="span8">
+    <div id="betaDensity" class="shiny-html-output nvd3 rChart"></div>
+  </div>
+</div>
 
 <hr>
 
